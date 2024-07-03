@@ -1,0 +1,87 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block content %}
+<div style="text-align: center; color: white;">
+    <h1>Edit Parameters</h1>
+    {% if original_image_url %}
+        <img src="{{ original_image_url }}" alt="Original Image" style="max-width: 100%; height: auto; margin-bottom: 20px;">
+    {% else %}
+        <p>No image to display.</p>
+    {% endif %}
+
+    <form action="{% url 'process_image' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="original_filename" value="{{ original_filename }}">
+        <input type="hidden" name="filename" value="{{ filename }}">
+        
+        <div style="margin-bottom: 10px;">
+            <label for="crop">Crop (left, upper, right, lower):</label>
+            <input type="text" name="crop" id="crop" placeholder="e.g., 50,50,350,350">
+        </div>
+        
+        <div style="margin-bottom: 10px;">
+            <label for="resize">Resize (width, height):</label>
+            <input type="text" name="resize" id="resize" placeholder="e.g., 200,200">
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <label for="filter">Filter:</label>
+            <select name="filter" id="filter">
+                <option value="None">None</option>
+                <option value="BLUR">Blur</option>
+                <option value="CONTOUR">Contour</option>
+                <option value="DETAIL">Detail</option>
+                <option value="EDGE_ENHANCE">Edge Enhance</option>
+                <option value="EDGE_ENHANCE_MORE">Edge Enhance More</option>
+                <option value="EMBOSS">Emboss</option>
+                <option value="FIND_EDGES">Find Edges</option>
+                <option value="SHARPEN">Sharpen</option>
+                <option value="SMOOTH">Smooth</option>
+                <option value="SMOOTH_MORE">Smooth More</option>
+            </select>
+        </div>
+
+        <h2>Choose Clustering Parameters</h2>
+        
+        <div style="margin-bottom: 10px;">
+            <label for="algorithm">Choose an algorithm:</label>
+            <select name="algorithm" id="algorithm-selector">
+                <option value="kmeans" {% if algorithm == 'kmeans' %}selected{% endif %}>K-means</option>
+                <option value="gmm" {% if algorithm == 'gmm' %}selected{% endif %}>GMM</option>
+                <option value="minibatch_kmeans" {% if algorithm == 'minibatch_kmeans' %}selected{% endif %}>Mini Batch K-means</option>
+                <option value="birch" {% if algorithm == 'birch' %}selected{% endif %}>Birch</option>
+                <option value="agglomerative" {% if algorithm == 'agglomerative' %}selected{% endif %}>Agglomerative Clustering</option>
+            </select>
+        </div>
+        
+        <div style="margin-bottom: 10px;">
+            <label for="k">Enter k (number of clusters):</label>
+            <input type="number" name="k" id="k" value="{{ k }}" min="1" max="32" required>
+        </div>
+        
+        <div id="sigma-container" style="display: {% if algorithm == 'gmm' %}block{% else %}none{% endif %}; margin-bottom: 10px;">
+            <label for="sigma">Enter sigma (for GMM only):</label>
+            <input type="number" name="sigma" id="sigma" value="{{ sigma }}" min="0.1" step="0.1">
+        </div>
+
+        <div id="downsample-factor-container" style="display: {% if algorithm == 'agglomerative' %}block{% else %}none{% endif %}; margin-bottom: 10px;">
+            <label for="downsample_factor">Enter downsample factor (for Agglomerative Clustering only, between 0 and 1):</label>
+            <input type="number" name="downsample_factor" id="downsample_factor" value="{{ downsample_factor }}" min="0.01" max="1" step="0.01">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Reprocess Image</button>
+    </form>
+</div>
+
+<script>
+document.getElementById('algorithm-selector').addEventListener('change', function() {
+    var value = this.value;
+    var sigmaContainer = document.getElementById('sigma-container');
+    var downsampleFactorContainer = document.getElementById('downsample-factor-container');
+
+    sigmaContainer.style.display = (value === 'gmm') ? 'block' : 'none';
+    downsampleFactorContainer.style.display = (value === 'agglomerative') ? 'block' : 'none';
+});
+</script>
+{% endblock %}

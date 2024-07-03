@@ -1,0 +1,55 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block content %}
+<div style="text-align: center; color: white;">
+    <h1>Your Sessions</h1>
+    <table style="width: 100%; color: white;">
+        <tr>
+            <th>Original Image</th>
+            <th>Processed Image</th>
+            <th>Algorithm</th>
+            <th>Parameters</th>
+            <th>Image Modifications</th>
+            <th>Date</th>
+            <th>Action</th>
+        </tr>
+        {% for session in sessions %}
+        <tr>
+            <td><img src="{{ session.original_image.url }}" alt="Original Image" style="max-width: 100px;"></td>
+            <td><img src="{{ session.processed_image.url }}" alt="Processed Image" style="max-width: 100px;"></td>
+            <td>{{ session.algorithm }}</td>
+            <td>
+                {% for key, value in session.parameters.items %}
+                    {% if session.algorithm == 'gmm' and key == 'sigma' %}
+                        {{ key }}: {{ value }}<br>
+                    {% elif session.algorithm == 'agglomerative' and key == 'downsample_factor' %}
+                        {{ key }}: {{ value }}<br>
+                    {% elif key == 'k' %}
+                        {{ key }}: {{ value }}<br>
+                    {% endif %}
+                {% endfor %}
+            </td>
+            <td>
+                {% if session.crop_coords %}
+                    Crop: {{ session.crop_coords }}<br>
+                {% endif %}
+                {% if session.resize_dims %}
+                    Resize: {{ session.resize_dims }}<br>
+                {% endif %}
+                {% if session.filter_type and session.filter_type != 'None' %}
+                    Filter: {{ session.filter_type }}<br>
+                {% endif %}
+            </td>
+            <td>{{ session.created_at }}</td>
+            <td>
+                <form action="{% url 'delete_session' session.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

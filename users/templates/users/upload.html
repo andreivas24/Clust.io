@@ -1,0 +1,52 @@
+{% extends 'users/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+  <div class="container white-text">
+    <h2>Upload an Image</h2>
+    <form action="{% url 'image_upload' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="image_file" id="image_file" required>
+        <button type="submit" class="btn btn-primary" id="header-links">Upload</button>
+    </form>   
+
+    {% if uploaded_file_url %}
+        <h3>Uploaded Image:</h3>
+        <img src="{{ uploaded_file_url }}" alt="Uploaded Image">
+        <form action="{% url 'process_image' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="filename" value="{{ filename }}">
+            <select name="algorithm" id="algorithm">
+                <option value="kmeans">K-means</option>
+                <option value="gmm">GM/EMM</option>
+            </select>
+            <select name="k">
+                <option value="2">k=2</option>
+                <option value="4">k=4</option>
+                <option value="8">k=8</option>
+                <option value="16">k=16</option>
+            </select>
+            <select name="sigma" id="sigma" style="display:none;">
+                <option value="6">sigma=6</option>
+                <option value="50">sigma=50</option>
+            </select>
+            <button type="submit" name="process">Process Image</button>
+        </form>
+
+        <script defer>
+            document.addEventListener('DOMContentLoaded', function() {
+                const algorithmSelector = document.getElementById('algorithm');
+                const sigmaSelector = document.getElementById('sigma');
+
+                algorithmSelector.addEventListener('change', function() {
+                    sigmaSelector.style.display = (this.value === 'gmm') ? 'block' : 'none';
+                });
+                sigmaSelector.style.display = (algorithmSelector.value === 'gmm') ? 'block' : 'none';
+            });
+        </script>
+    {% else %}
+        <p>Please upload an image to proceed.</p>
+    {% endif %}
+  </div>
+{% endblock %}

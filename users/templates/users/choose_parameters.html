@@ -1,0 +1,132 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block content %}
+<div style="text-align: center; color: white;">
+    <h1>Choose Parameters for Processing</h1>
+    {% if file_url %}
+        <img src="{{ file_url }}" alt="Uploaded Image" style="max-width: 100%; height: auto; margin-bottom: 20px;">
+    {% else %}
+        <p>No image to display.</p>
+    {% endif %}
+
+    <form action="{% url 'process_image' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="original_filename" value="{{ filename }}">
+
+        <h2>Edit Image</h2>
+        <div style="margin-bottom: 10px;">
+            <label for="crop">CROP (LEFT, UPPER, RIGHT, LOWER):</label>
+            <input type="text" name="crop" id="crop" placeholder="e.g., 50,50,350,350">
+        </div>
+        <div style="margin-bottom: 10px;">
+            <label for="resize">RESIZE (WIDTH, HEIGHT):</label>
+            <input type="text" name="resize" id="resize" placeholder="e.g., 200,200">
+        </div>
+        <div style="margin-bottom: 10px;">
+            <label for="filter">FILTER:</label>
+            <select name="filter" id="filter">
+                <option value="None">None</option>
+                <option value="BLUR">Blur</option>
+                <option value="CONTOUR">Contour</option>
+                <option value="DETAIL">Detail</option>
+                <option value="EDGE_ENHANCE">Edge Enhance</option>
+                <option value="EDGE_ENHANCE_MORE">Edge Enhance More</option>
+                <option value="EMBOSS">Emboss</option>
+                <option value="FIND_EDGES">Find Edges</option>
+                <option value="SHARPEN">Sharpen</option>
+                <option value="SMOOTH">Smooth</option>
+                <option value="SMOOTH_MORE">Smooth More</option>
+            </select>
+        </div>
+
+        <h2>Choose Clustering Parameters</h2>
+        <div style="margin-bottom: 10px;">
+            <label for="algorithm">CHOOSE AN ALGORITHM:</label>
+            <select name="algorithm" id="algorithm-selector">
+                <option value="kmeans">K-means</option>
+                <option value="gmm">GMM</option>
+                <option value="minibatch_kmeans">Mini Batch K-means</option>
+                <option value="birch">Birch</option>
+                <option value="agglomerative">Agglomerative Clustering</option>
+            </select>
+        </div>
+        
+        <div style="margin-bottom: 10px;">
+            <label for="k">ENTER K (NUMBER OF CLUSTERS):</label>
+            <input type="number" name="k" id="k" value="4" min="1" max="32" required>
+        </div>
+        
+        <div id="sigma-container" style="display: none; margin-bottom: 10px;">
+            <label for="sigma">ENTER SIGMA (FOR GMM ONLY):</label>
+            <input type="number" name="sigma" id="sigma" value="10" min="0.1" step="0.1">
+        </div>
+
+        <div id="downsample-container" style="display: none; margin-bottom: 10px;">
+            <label for="downsample_factor">ENTER DOWNSAMPLE FACTOR (FOR AGGLOMERATIVE ONLY, BETWEEN 0 AND 1):</label>
+            <input type="number" name="downsample_factor" id="downsample_factor" value="0.1" min="0.1" max="1" step="0.1">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Process Image</button>
+    </form>
+
+    <br>
+
+    <!-- Comparison Report Form -->
+    <form action="{% url 'comparison_report' %}" method="post" style="margin-top: 20px;">
+        {% csrf_token %}
+        <input type="hidden" name="original_filename" value="{{ filename }}">
+        <label for="comparison_k">Choose K for Comparison Report:</label>
+        <select name="k" id="comparison_k">
+            <option value="2">2</option>
+            <option value="4">4</option>
+            <option value="8">8</option>
+            <option value="16">16</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Generate Comparison Report</button>
+    </form>    
+
+    <div style="display: flex; justify-content: center;">
+        <div class="parameter-rectangle" data-toggle="tooltip" data-placement="right" 
+            title="
+            k: Number of clusters to form and the number of centroids to generate.<br>
+            sigma: Standard deviation for Gaussian distributions used in GMM algorithm.<br>
+            downsample: Factor to reduce the image size for faster processing in Agglomerative Clustering.
+            ">
+            <i class="fas fa-info-circle"></i> Parameters
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('algorithm-selector').addEventListener('change', function() {
+    var value = this.value;
+    var sigmaContainer = document.getElementById('sigma-container');
+    var downsampleContainer = document.getElementById('downsample-container');
+
+    sigmaContainer.style.display = (value === 'gmm') ? 'block' : 'none';
+    downsampleContainer.style.display = (value === 'agglomerative') ? 'block' : 'none';
+});
+
+// Initialize tooltip
+$(document).ready(function() {
+    $('[data-toggle="tooltip"]').tooltip({
+        html: true
+    });
+});
+</script>
+
+<style>
+.parameter-rectangle {
+    width: 150px;
+    height: 30px;
+    border: 1px solid #FD5E14;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FD5E14;
+    cursor: pointer;
+    margin-top: 20px;
+}
+</style>
+{% endblock %}

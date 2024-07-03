@@ -1,0 +1,118 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<style>
+    .container {
+        padding: 20px;
+    }
+    .white-text {
+        color: white;
+    }
+    .orange-text {
+        color: #FD5E14;
+    }
+    .dark-background {
+        background-color: #1b1b1b;
+    }
+    .custom-collapse {
+        cursor: pointer;
+    }
+    .navbar-custom {
+        background-color: transparent;
+        border: none;
+    }
+</style>
+
+<div class="container white-text">
+    <h1 class="orange-text">Learn More About Our Platform</h1>
+    <p>Unlock the power of automated image analysis with our state-of-the-art Image Clustering Web Application. 
+        Whether you're a digital artist, a researcher, or simply a photography enthusiast, our platform brings cutting-edge technology to your fingertips. <br>
+        Effortlessly upload your images and watch as our advanced algorithms reveal hidden structures and patterns. 
+        Ideal for organizing vast image datasets or extracting new insights, our tool is crafted to elevate your visual data analysis. <br>
+        Dive into a seamless clustering experience. <b>No advanced technical knowledge required!</b> <br>
+        Explore your world in clusters today!</p>
+</div>
+
+<div class="container white-text">
+    <h1 class="orange-text custom-collapse" data-toggle="collapse" data-target="#clustering-algorithms" aria-expanded="false" aria-controls="clustering-algorithms">
+        Clustering Algorithms <i class="fas fa-chevron-down"></i>
+    </h1>
+    <div class="collapse" id="clustering-algorithms">
+        <h2 style="color:#8E3C15;">K-means Clustering</h2>
+        <p><strong>Mathematical Background:</strong> K-means clustering partitions the data into K clusters by minimizing the sum of squared distances between each point and the centroid of its assigned cluster.</p>
+        <p><strong>Strengths:</strong> Simple to implement, efficient for large datasets, and works well for spherical clusters.</p>
+        <p><strong>Weaknesses:</strong> Sensitive to initial centroid selection, not suitable for clusters with irregular shapes.</p>
+        <p><strong>Use Cases:</strong> Market segmentation, document clustering, image compression.</p>
+
+        <h2 style="color:#8E3C15;">GMM (Gaussian Mixture Model)</h2>
+        <p><strong>Mathematical Background:</strong> GMM assumes that the data is generated from a mixture of several Gaussian distributions with unknown parameters. It uses the Expectation-Maximization algorithm to estimate the parameters.</p>
+        <p><strong>Strengths:</strong> Can model clusters with different shapes, provides probabilistic cluster membership.</p>
+        <p><strong>Weaknesses:</strong> Sensitive to initial parameters, can be computationally expensive.</p>
+        <p><strong>Use Cases:</strong> Anomaly detection, speech recognition, image segmentation.</p>
+
+        <h2 style="color:#8E3C15;">Agglomerative Clustering</h2>
+        <p><strong>Mathematical Background:</strong> Agglomerative clustering is a hierarchical clustering method that starts with each point as a separate cluster and iteratively merges the closest clusters.</p>
+        <p><strong>Strengths:</strong> Does not require the number of clusters to be specified, can capture complex cluster structures.</p>
+        <p><strong>Weaknesses:</strong> Computationally expensive for large datasets, sensitive to noise and outliers.</p>
+        <p><strong>Use Cases:</strong> Social network analysis, biology (e.g., phylogenetic trees), geospatial analysis.</p>
+
+        <h2 style="color:#8E3C15;">BIRCH (Balanced Iterative Reducing and Clustering using Hierarchies)</h2>
+        <p><strong>Mathematical Background:</strong> BIRCH uses a tree structure to incrementally and dynamically cluster incoming data points. It is particularly useful for large datasets.</p>
+        <p><strong>Strengths:</strong> Scalable to large datasets, efficient incremental clustering.</p>
+        <p><strong>Weaknesses:</strong> Assumes clusters are convex and spherical, less effective for small datasets.</p>
+        <p><strong>Use Cases:</strong> Large-scale data analysis, network traffic analysis, time-series data.</p>
+
+        <h2 style="color:#8E3C15;">Mini-Batch K-means</h2>
+        <p><strong>Mathematical Background:</strong> Mini-Batch K-means is a variation of K-means that uses small random batches of data to reduce computation time while maintaining good clustering performance.</p>
+        <p><strong>Strengths:</strong> Faster than traditional K-means, works well with large datasets.</p>
+        <p><strong>Weaknesses:</strong> May converge to a less optimal solution compared to full K-means.</p>
+        <p><strong>Use Cases:</strong> Real-time data analysis, large-scale clustering tasks.</p>
+    </div>
+
+    <h1 class="orange-text custom-collapse" data-toggle="collapse" data-target="#filters" aria-expanded="false" aria-controls="filters">
+        Filters <i class="fas fa-chevron-down"></i>
+    </h1>
+    <div class="collapse" id="filters">
+        <h2 style="color:#8E3C15;">Blur Filter</h2>
+        <p>The blur filter, also known as a smoothing filter, is used to reduce noise and detail in an image. It typically involves a convolution operation with a kernel (e.g., a Gaussian kernel).</p>
+
+        <h2 style="color:#8E3C15;">Contour Filter</h2>
+        <p>The contour filter is used to detect the contours or outlines of objects within an image. It emphasizes the edges and boundaries by highlighting areas with significant intensity changes.</p>
+
+        <h2 style="color:#8E3C15;">Detail Filter</h2>
+        <p>The detail filter enhances the details and textures in an image. It works by emphasizing high-frequency components while leaving low-frequency components (smooth areas) relatively unchanged.</p>
+
+        <h2 style="color:#8E3C15;">Edge Enhance Filter</h2>
+        <p>The edge enhance filter improves the visibility of edges in an image by increasing the contrast along the edges. It often involves using a convolution kernel that emphasizes edge differences.</p>
+
+        <h2 style="color:#8E3C15;">Edge Enhance More Filter</h2>
+        <p>The edge enhance more filter is a more aggressive version of the edge enhance filter, providing a stronger emphasis on edges by further increasing contrast along edges.</p>
+
+        <h2 style="color:#8E3C15;">Emboss Filter</h2>
+        <p>The emboss filter creates an image that appears as if it is embossed or carved into a surface. It does this by highlighting edges and creating shadows that mimic the appearance of raised surfaces.</p>
+
+        <h2 style="color:#8E3C15;">Find Edges Filter</h2>
+        <p>The find edges filter detects edges in an image by identifying areas with significant changes in intensity. It often uses edge detection algorithms like the Sobel or Canny methods.</p>
+
+        <h2 style="color:#8E3C15;">Sharpen Filter</h2>
+        <p>The sharpen filter enhances the edges and fine details in an image by increasing the contrast along edges. It typically uses a convolution kernel that emphasizes high-frequency components.</p>
+
+        <h2 style="color:#8E3C15;">Smooth Filter</h2>
+        <p>The smooth filter, also known as a smoothing filter or low-pass filter, reduces noise and smooths out the transitions in an image. It often uses a convolution kernel like a box filter or Gaussian filter.</p>
+
+        <h2 style="color:#8E3C15;">Smooth More Filter</h2>
+        <p>The smooth more filter is a more aggressive version of the smooth filter, providing a stronger smoothing effect by further reducing noise and detail.</p>
+    </div>
+</div>
+
+<div class="container white-text">
+    <h1 class="orange-text">Clustering Accuracy and Processing Time</h1>
+    <p>For each algorithm, the application will calculate and display the clustering accuracy and processing time based on the chosen parameters and number of clusters.</p>
+</div>
+{% endblock %}

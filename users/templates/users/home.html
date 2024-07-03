@@ -1,0 +1,21 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'users/css/main.css' %}">
+<div class="container">
+    <div class="row g-0">
+        <div class="col-sm-6 col-md-8" id="header-text">
+          <h1 id="header-h1">Image Clustering <br> Web Application </h1>
+          <p id="header-paragraph">An educational learning platform <br> Which lays the foundations of clusterization.</p>
+          <a href="{% url 'discover_more' %}" class="btn" style="color: white; background-color: #fd5e14;" id="body-link-row">Discover More</a>
+        </div>
+
+        <div class="col-md-4" id="header-image" style="margin-top: 20px;">  <!-- Increase the top margin -->
+          <img src="{% static 'users/images/ai-clustering.png' %}" alt="AI Clustering" style="width: 100%; max-width: 300px; height: auto;">
+      </div>
+      
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,47 @@
+{% extends 'users/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="profile-header-container d-flex justify-content-center">
+        <div class="profile-header-img">
+            {% if user.profile.image and user.profile.image.name != 'default-avatar.png' %}
+                <img class="profile-img" src="{{ user.profile.image.url }}" alt="{{ user.username }}'s profile image">
+            {% else %}
+                <img class="profile-img" src="{% static 'users/images/default-avatar.png' %}" alt="Default Avatar">
+            {% endif %}
+        </div>        
+    </div>
+    <div class="text-center mt-3">
+        <h2>{{ user.get_full_name|default:user.username }}</h2>
+        <p class="text-secondary mb-1">{{ user.email }}</p>
+        <p class="text-muted font-size-sm">{{ user.profile.bio }}</p>
+    </div>
+    <div class="row mt-4">
+        <div class="col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="d-flex align-items-center mb-3">Profile Information</h5>
+                    <p>Username: {{ user.username }}</p>
+                    <p>Email: {{ user.email }}</p>
+                    <!-- Include other user fields as needed -->
+                    <p>Member since: {{ user.date_joined|date:"F Y" }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="mb-3">Biography</h5>
+                    <p>{{ user.profile.bio|default:"No biography provided." }}</p>
+                    <!-- Include additional sections like interests or recent activity -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center mt-4">
+        <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+    </div>
+</div>
+{% endblock %}
