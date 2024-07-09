@@ -21,9 +21,6 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.core.files.base import ContentFile
 from sklearn.metrics import silhouette_score
-from reportlab.lib.pagesizes import letter
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image as ReportLabImage
-from reportlab.lib.styles import getSampleStyleSheet
 
 def home(request):
     return render(request, 'users/home.html')
