@@ -424,8 +424,8 @@ def save_session(request, original_image, processed_image, algorithm, parameters
         crop_coords=request.POST.get('crop', ''),
         resize_dims=request.POST.get('resize', ''),
         filter_type=request.POST.get('filter', 'None'),
-        processing_time=processing_time,  # Add this line
-        silhouette_score=silhouette_score  # Add this line
+        processing_time=processing_time,
+        silhouette_score=silhouette_score
     )
     session.save()
 

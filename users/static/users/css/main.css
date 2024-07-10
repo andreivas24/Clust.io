@@ -32,21 +32,21 @@
   }
   .header-link, .body-link {
     position: relative;
-    border-radius: 30px !important; /* Ensure border-radius is enforced */
+    border-radius: 30px !important;
     display: inline-block;
-    padding: 15px 30px !important; /* Match padding with Discover More button */
+    padding: 15px 30px !important;
     text-transform: uppercase;
     text-decoration: none;
-    font-size: 13px !important; /* Ensure smaller text size */
-    font-weight: bold !important; /* Make the text bold */
+    font-size: 13px !important;
+    font-weight: bold !important;
     overflow: hidden;
     transition: 0.2s;
     margin-right: 20px;
-    min-width: 100px; /* Ensure minimum width */
+    min-width: 100px;
     text-align: center;
     color: white !important;
     background-color: #fd5e14 !important;
-    font-family: 'Open Sans', sans-serif !important; /* Ensure font family is loaded */
+    font-family: 'Open Sans', sans-serif !important;
   }
 
   /* Hover Effects */
@@ -56,7 +56,7 @@
       box-shadow: 0 0 10px #ff8248, 0 0 4px #ff8248, 0 0 80px #ff8248 !important;
       transition-delay: 0.1s;
       text-decoration: none !important;
-      border-radius: 30px !important; /* Ensure hover state keeps the same border-radius */
+      border-radius: 30px !important;
   }
 
   .header-link:active, .body-link:active {
@@ -109,8 +109,8 @@
   }
   
   .ms-auto.navbar-nav .btn {
-    margin-top: 10px;  /* Adjust this value as needed for desired spacing */
-    margin-right: 20px; /* Existing right margin for spacing between buttons */
+    margin-top: 10px;
+    margin-right: 20px;
   }
 
   .navbar-nav a, .navbar-nav button {
@@ -426,9 +426,9 @@
 }
 
 #header-image img {
-  max-width: 100%; /* Limits the image size to the parent container width */
-  height: auto; /* Maintains the aspect ratio */
-  border-radius: 10px; /* Optional: rounds the corners of the image */
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
   margin-top: 120px;
 }
 

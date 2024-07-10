@@ -25,7 +25,6 @@
                     <h5 class="d-flex align-items-center mb-3">Profile Information</h5>
                     <p>Username: {{ user.username }}</p>
                     <p>Email: {{ user.email }}</p>
-                    <!-- Include other user fields as needed -->
                     <p>Member since: {{ user.date_joined|date:"F Y" }}</p>
                 </div>
             </div>
@@ -35,7 +34,6 @@
                 <div class="card-body">
                     <h5 class="mb-3">Biography</h5>
                     <p>{{ user.profile.bio|default:"No biography provided." }}</p>
-                    <!-- Include additional sections like interests or recent activity -->
                 </div>
             </div>
         </div>

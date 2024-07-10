@@ -45,7 +45,7 @@
             <label for="algorithm">CHOOSE AN ALGORITHM:</label>
             <select name="algorithm" id="algorithm-selector">
                 <option value="kmeans">K-means</option>
-                <option value="gmm">GMM</option>
+                <option value="gmm">EM/GMM</option>
                 <option value="minibatch_kmeans">Mini Batch K-means</option>
                 <option value="birch">Birch</option>
                 <option value="agglomerative">Agglomerative Clustering</option>
@@ -58,7 +58,7 @@
         </div>
         
         <div id="sigma-container" style="display: none; margin-bottom: 10px;">
-            <label for="sigma">ENTER SIGMA (FOR GMM ONLY):</label>
+            <label for="sigma">ENTER SIGMA (FOR EM/GMM ONLY):</label>
             <input type="number" name="sigma" id="sigma" value="10" min="0.1" step="0.1">
         </div>
 
@@ -90,7 +90,7 @@
         <div class="parameter-rectangle" data-toggle="tooltip" data-placement="right" 
             title="
             k: Number of clusters to form and the number of centroids to generate.<br>
-            sigma: Standard deviation for Gaussian distributions used in GMM algorithm.<br>
+            sigma: Standard deviation for Gaussian distributions used in EM/GMM algorithm.<br>
             downsample: Factor to reduce the image size for faster processing in Agglomerative Clustering.
             ">
             <i class="fas fa-info-circle"></i> Parameters
@@ -108,7 +108,7 @@ document.getElementById('algorithm-selector').addEventListener('change', functio
     downsampleContainer.style.display = (value === 'agglomerative') ? 'block' : 'none';
 });
 
-// Initialize tooltip
+// Initializare tooltip
 $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip({
         html: true

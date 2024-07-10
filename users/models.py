@@ -16,7 +16,7 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.user.username} Profile'
 
-# Signal to create or update the user profile
+# Semnal pentru a crea sau updata profilul utilizatorilor
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
@@ -33,8 +33,8 @@ class UserSession(models.Model):
     crop_coords = models.CharField(max_length=100, null=True, blank=True)
     resize_dims = models.CharField(max_length=100, null=True, blank=True)
     filter_type = models.CharField(max_length=50, null=True, blank=True)
-    processing_time = models.FloatField(null=True, blank=True)  # Add this line
-    silhouette_score = models.FloatField(null=True, blank=True)  # Add this line
+    processing_time = models.FloatField(null=True, blank=True)
+    silhouette_score = models.FloatField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

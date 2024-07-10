@@ -48,7 +48,7 @@
             <label for="algorithm">Choose an algorithm:</label>
             <select name="algorithm" id="algorithm-selector">
                 <option value="kmeans" {% if algorithm == 'kmeans' %}selected{% endif %}>K-means</option>
-                <option value="gmm" {% if algorithm == 'gmm' %}selected{% endif %}>GMM</option>
+                <option value="gmm" {% if algorithm == 'gmm' %}selected{% endif %}>EM/GMM</option>
                 <option value="minibatch_kmeans" {% if algorithm == 'minibatch_kmeans' %}selected{% endif %}>Mini Batch K-means</option>
                 <option value="birch" {% if algorithm == 'birch' %}selected{% endif %}>Birch</option>
                 <option value="agglomerative" {% if algorithm == 'agglomerative' %}selected{% endif %}>Agglomerative Clustering</option>
@@ -61,7 +61,7 @@
         </div>
         
         <div id="sigma-container" style="display: {% if algorithm == 'gmm' %}block{% else %}none{% endif %}; margin-bottom: 10px;">
-            <label for="sigma">Enter sigma (for GMM only):</label>
+            <label for="sigma">Enter sigma (for EM/GMM only):</label>
             <input type="number" name="sigma" id="sigma" value="{{ sigma }}" min="0.1" step="0.1">
         </div>
 

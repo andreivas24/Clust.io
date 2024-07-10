@@ -18,12 +18,12 @@
     <a href="{{ pdf_url }}" download="report.pdf">Download PDF Report</a>
     <br>
 
-    <!-- Form to change parameters -->
+    <!-- Form pentru a schimba parametrii -->
     <form id="changeParametersForm" action="{% url 'edit_parameters' filename %}" method="get" style="margin-bottom: 20px;">
         <button type="submit" class="btn btn-secondary">Change Parameters</button>
     </form>
     
-    <!-- Form to upload a new image -->
+    <!-- Form pentru a incarca o noua imagine -->
     <form id="uploadNewImageForm" method="post" enctype="multipart/form-data" action="{% url 'image_upload' %}" style="margin-bottom: 20px;">
         {% csrf_token %}
         <input type="file" name="image_file" style="margin-bottom: 10px;">
@@ -68,7 +68,7 @@
         const csrftoken = getCookie('csrftoken');
 
         function csrfSafeMethod(method) {
-            // these HTTP methods do not require CSRF protection
+            // aceste metode de HTTP nu trebuiesc protectii de tip CSRF
             return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
         }
 
@@ -80,9 +80,9 @@
             }
         });
 
-        // Your existing AJAX call here
+        // AJAX CALL
         $('#processingForm').submit(function(e) {
-            e.preventDefault(); // Prevent default form submission
+            e.preventDefault(); // Se previne trimiterea implicita a formularelor
             var formData = new FormData(this);
 
             $.ajax({
@@ -90,7 +90,7 @@
                 type: 'POST',
                 data: formData,
                 success: function(data) {
-                    // Update the image source with the new URL
+                    // Se actualizeaza sursa imaginii cu noua adresa URL
                     $('#processedImage').attr('src', data.new_image_url);
                 },
                 error: function() {

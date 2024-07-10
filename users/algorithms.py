@@ -7,7 +7,7 @@ from sklearn.mixture import GaussianMixture
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import matplotlib
-matplotlib.use('Agg')  # Use the non-interactive Agg backend
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from skimage.filters import gaussian
 import plotly.graph_objs as go
@@ -59,7 +59,7 @@ def run_agglomerative_clustering(image_data, n_clusters, max_points=10000):
     clustering = AgglomerativeClustering(n_clusters=n_clusters)
     labels_sampled = clustering.fit_predict(sampled_pixels)
 
-    # Assign labels to the original pixels using nearest neighbors
+    # Se atribuie etichete pixelilor originali folosind cei mai apropiați vecini
     from sklearn.neighbors import NearestNeighbors
 
     nn = NearestNeighbors(n_neighbors=1)
@@ -73,19 +73,15 @@ def run_agglomerative_clustering(image_data, n_clusters, max_points=10000):
     return clustered_img, labels, centers
 
 def downsample_image(image_data, factor):
-    """
-    Downsample the image by the given factor.
-    Factor should be between 0 and 1.
-    """
     if factor <= 0 or factor > 1:
         raise ValueError("Downsample factor must be between 0 and 1.")
 
-    # Calculate new dimensions
+    # Se calculeaza dimensiuni noi
     height, width, _ = image_data.shape
     new_height = int(height * factor)
     new_width = int(width * factor)
 
-    # Resize image using PIL
+    # Se redimensioneaza imaginea folosind PIL
     image = Image.fromarray(image_data)
     image = image.resize((new_width, new_height), Image.Resampling.LANCZOS)
 
@@ -94,16 +90,16 @@ def downsample_image(image_data, factor):
 def process_and_smooth(clustered_img, labels, centers):
     enhanced_img = clustered_img.copy()
 
-    # Apply Gaussian smoothing
+    # Se aplica Gaussian smoothing
     enhanced_img = gaussian(enhanced_img, sigma=1, channel_axis=-1)
     
-    # Perform color correction if needed
+    # Corectie de culori si se schimba tipul imaginii
     enhanced_img = (enhanced_img * 255).astype(np.uint8)
     
     return enhanced_img
 
 def save_plot_2d(pixels, labels, centers, filename_prefix='plot_2d'):
-    # Plot for Red vs Green
+    # Plot pentru Red vs Green
     plt.figure(figsize=(10, 8))
     unique_labels = np.unique(labels)
     for label in unique_labels:
@@ -120,7 +116,7 @@ def save_plot_2d(pixels, labels, centers, filename_prefix='plot_2d'):
     plt.savefig(plot_path_rg)
     plt.close()
 
-    # Plot for Green vs Blue
+    # Plot pentru Green vs Blue
     plt.figure(figsize=(10, 8))
     for label in unique_labels:
         cluster = pixels[labels == label]
@@ -136,7 +132,7 @@ def save_plot_2d(pixels, labels, centers, filename_prefix='plot_2d'):
     plt.savefig(plot_path_gb)
     plt.close()
 
-    # Plot for Blue vs Red
+    # Plot pentru Blue vs Red
     plt.figure(figsize=(10, 8))
     for label in unique_labels:
         cluster = pixels[labels == label]
@@ -203,15 +199,14 @@ def save_plot_3d(pixels, labels=None, centers=None, filename='plot_3d.html', max
     return f'{settings.MEDIA_URL}{filename}'
 
 def crop_image(image, crop_values):
-    """ Crop the image. crop_values should be a tuple (left, upper, right, lower) """
+    # Decupare de imagine. Este o tupla de tipul (left, upper, right, lower)
     return image.crop(crop_values)
 
 def resize_image_algo(image, resize_values):
-    """ Resize the image. resize_values should be a tuple (width, height) """
+    # Redimensionare de imagine. Este o tupla de tipul (width, height)
     return image.resize(resize_values, Image.Resampling.LANCZOS)
 
 def apply_filter(image, filter_type):
-    """ Apply a filter to the image """
     filters = {
         'BLUR': ImageFilter.BLUR,
         'CONTOUR': ImageFilter.CONTOUR,

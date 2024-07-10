@@ -6,4 +6,5 @@ class UsersConfig(AppConfig):
     name = 'users'
 
     def ready(self):
-        import users.signals  # This imports the signals module where your signals are defined
+        import users.signals  # Se importa modulul de semnale unde sunt definite semnalele
+        
