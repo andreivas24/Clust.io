@@ -11,6 +11,8 @@
             <th>Algorithm</th>
             <th>Parameters</th>
             <th>Image Modifications</th>
+            <th>Processing Time</th> <!-- Add this line -->
+            <th>Silhouette Score</th> <!-- Add this line -->
             <th>Date</th>
             <th>Action</th>
         </tr>
@@ -41,6 +43,8 @@
                     Filter: {{ session.filter_type }}<br>
                 {% endif %}
             </td>
+            <td>{{ session.processing_time }} seconds</td> <!-- Add this line -->
+            <td>{{ session.silhouette_score }}</td> <!-- Add this line -->
             <td>{{ session.created_at }}</td>
             <td>
                 <form action="{% url 'delete_session' session.id %}" method="post">

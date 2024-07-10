@@ -33,6 +33,8 @@ class UserSession(models.Model):
     crop_coords = models.CharField(max_length=100, null=True, blank=True)
     resize_dims = models.CharField(max_length=100, null=True, blank=True)
     filter_type = models.CharField(max_length=50, null=True, blank=True)
+    processing_time = models.FloatField(null=True, blank=True)  # Add this line
+    silhouette_score = models.FloatField(null=True, blank=True)  # Add this line
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

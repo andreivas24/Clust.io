@@ -270,8 +270,6 @@ def process_image(request):
             if downsample_factor is not None and algorithm == 'agglomerative':
                 parameters['downsample_factor'] = downsample_factor
 
-            save_session(request, original_image=original_filename, processed_image=new_processed_filename, algorithm=algorithm, parameters=parameters)
-
             # Calculate silhouette score
             sample_pixels = img_data.reshape(-1, 3)
             sample_labels = labels.reshape(-1)
@@ -285,6 +283,8 @@ def process_image(request):
             # Calculate processing time
             processing_time = time.time() - start_time
             print(f"Processing time: {processing_time}")
+
+            save_session(request, original_image=original_filename, processed_image=new_processed_filename, algorithm=algorithm, parameters=parameters, processing_time=processing_time, silhouette_score=silhouette_avg)
 
             # Generate PDF report
             plot2d_paths = {
@@ -413,7 +413,7 @@ def edit_profile(request):
     return render(request, 'users/edit_profile.html', {'form': form})
 
 @login_required
-def save_session(request, original_image, processed_image, algorithm, parameters):
+def save_session(request, original_image, processed_image, algorithm, parameters, processing_time, silhouette_score):
     user = request.user
     session = UserSession(
         user=user,
@@ -423,10 +423,11 @@ def save_session(request, original_image, processed_image, algorithm, parameters
         parameters=parameters,
         crop_coords=request.POST.get('crop', ''),
         resize_dims=request.POST.get('resize', ''),
-        filter_type=request.POST.get('filter', 'None')
+        filter_type=request.POST.get('filter', 'None'),
+        processing_time=processing_time,  # Add this line
+        silhouette_score=silhouette_score  # Add this line
     )
     session.save()
-
 
 @login_required
 def view_sessions(request):
